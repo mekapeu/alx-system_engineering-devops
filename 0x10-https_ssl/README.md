@@ -18,7 +18,6 @@ $ sudo apt-get install git
 ```
 
 ## :blue_book: Authors
-* **Bennett Dixon** - [@BennettDixon](https://github.com/BennettDixon)
 
 ## :mag: License
 
