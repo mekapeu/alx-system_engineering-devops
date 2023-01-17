@@ -1,29 +1,29 @@
 #!/usr/bin/python3
-"""Fetch employee todos info
-"""
-import requests
-from sys import argv
+'''
+For a given employee ID, returns information about his/her TODO list progress.
+'''
 
+if __name__ == '__main__':
+    import requests
+    import sys
 
-if __name__ == "__main__":
-    if len(argv) != 2:
-        print("Usage: ./0-gather_data_from_an_API.py <employee id>")
-        exit()
-    user = requests.get(
-                     "https://jsonplaceholder.typicode.com/users/{}"
-                     .format(argv[1])
-                    ).json()
-    if not user:
-        exit()
-    else:
-        name = user.get('name')
-    all = requests.get(
-                     "https://jsonplaceholder.typicode.com/todos?userId={}"
-                     .format(argv[1])
-                    ).json()
-    dones = [i for i in all if i.get('completed')]
-    print("Employee {} is done with tasks({}/{}):"
-          .format(name, len(dones), len(all)))
-    for d in dones:
-        print("\t {}".format(d.get('title')))
+    NUMBER_OF_DONE_TASKS = 0
+    TASK_TITLE = []
+    USER_ID = sys.argv[1]
+    req = requests.get('https://jsonplaceholder.typicode.com/users/{}'.
+                       format(USER_ID)).json()
+    USERNAME = req.get("username")
+    req = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'.
+                       format(USER_ID)).json()
+    for item in req:
+        if item.get('completed') is True:
+            TASK_TITLE.append(item.get('title'))
+            NUMBER_OF_DONE_TASKS += 1
+    TOTAL_NUMBER_OF_TASKS = len(req)
+
+    print('Employee {} is done with tasks({}/{}):'.
+          format(EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    for title in TASK_TITLE:
+        print('\t {}'.format(title))
+
         
